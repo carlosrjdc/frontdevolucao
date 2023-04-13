@@ -56,11 +56,11 @@ export const TabelaDivergencia = React.forwardRef((props, ref) => {
               <div>Status: {info.status}</div>
               <div>
                 Inicio Conferencia:{" "}
-                {moment(info.inicioConferencia).format("DD/MM/YYYY - hh:mm:ss")}
+                {moment(info.inicioConferencia).format("DD/MM/YYYY - HH:mm:ss")}
               </div>
               <div>
                 Termino Conferencia:{" "}
-                {moment(info.fimConferencia).format("DD/MM/YYYY - hh:mm:ss")}
+                {moment(info.fimConferencia).format("DD/MM/YYYY - HH:mm:ss")}
               </div>
             </div>
           </div>
