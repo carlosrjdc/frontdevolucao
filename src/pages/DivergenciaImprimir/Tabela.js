@@ -12,6 +12,8 @@ export const TabelaDivergencia = React.forwardRef((props, ref) => {
   const { divergencia, info, notas } = props;
   const tamanhofonte = 11;
 
+  console.log(divergencia);
+
   return (
     <div ref={ref}>
       <div
@@ -107,6 +109,12 @@ export const TabelaDivergencia = React.forwardRef((props, ref) => {
                 sx={{ fontSize: tamanhofonte, fontWeight: "bold" }}
                 align="center"
               >
+                AVARIA
+              </TableCell>
+              <TableCell
+                sx={{ fontSize: tamanhofonte, fontWeight: "bold" }}
+                align="center"
+              >
                 DIFERENÇA
               </TableCell>
             </TableRow>
@@ -128,6 +136,9 @@ export const TabelaDivergencia = React.forwardRef((props, ref) => {
                 </TableCell>
                 <TableCell sx={{ fontSize: tamanhofonte }} align="center">
                   {row.fisico}
+                </TableCell>
+                <TableCell sx={{ fontSize: tamanhofonte }} align="center">
+                  {row.avaria}
                 </TableCell>
                 <TableCell sx={{ fontSize: tamanhofonte }} align="center">
                   {row.diferenca}
