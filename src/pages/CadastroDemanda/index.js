@@ -9,6 +9,7 @@ import { HiSearchCircle } from "react-icons/hi";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import Axios from "../../Api";
+import TabelaProdutos from "./Tabela/index.js";
 
 export default function CadastroDemanda() {
   const [numeroPesquisa, setNumeroPesquisa] = useState("");
@@ -20,6 +21,7 @@ export default function CadastroDemanda() {
   );
 
   const [dadosBusarDados, setdadosBuscarDados] = useState([]);
+  const [dadosItens, setDadosItens] = useState([]);
   const [placa, setPlaca] = useState("");
   const [tratrErro, setTratarErro] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -35,7 +37,7 @@ export default function CadastroDemanda() {
   async function BuscarDados() {
     setIsLoading(true);
     setTratarErro("");
-    Axios.get(`/buscarinfocarro/${dataInicial}/${dataFinal}/${numeroPesquisa}`)
+    Axios.get(`/buscarinfocarro/${numeroPesquisa}`)
       .then((response) => {
         setdadosBuscarDados(
           response.data
@@ -63,6 +65,11 @@ export default function CadastroDemanda() {
         Axios.get(`/buscardemandaporviagem/${response.data[0]?.viagemId}`).then(
           (retorno) => {
             setListaDemandasCadastradas(retorno.data);
+            Axios.get(
+              `/conferencia/buscaritensconferencia/${retorno.data[0].id}`
+            ).then(async (verificar) => {
+              await setDadosItens(verificar.data);
+            });
           }
         );
         setIsLoading(false);
@@ -289,15 +296,20 @@ export default function CadastroDemanda() {
           </div>
           <br></br>
           <br></br>
-          <div>
-            <button onClick={handlePrint}>Imprimir!</button>
-            <ComponentToPrint
-              id={listaDemandaCadastradas[0]?.id}
-              placa={listaDemandaCadastradas[0]?.placa}
-              idviagem={listaDemandaCadastradas[0]?.id_viagem}
-              transportadora={listaDemandaCadastradas[0]?.transportadora}
-              ref={componentRef}
-            />
+          <div style={{ display: "flex" }}>
+            <div>
+              <button onClick={handlePrint}>Imprimir!</button>
+              <ComponentToPrint
+                id={listaDemandaCadastradas[0]?.id}
+                placa={listaDemandaCadastradas[0]?.placa}
+                idviagem={listaDemandaCadastradas[0]?.id_viagem}
+                transportadora={listaDemandaCadastradas[0]?.transportadora}
+                ref={componentRef}
+              />
+            </div>
+            <div>
+              <TabelaProdutos dadosItens={dadosItens} />
+            </div>
           </div>
         </div>
       </div>
